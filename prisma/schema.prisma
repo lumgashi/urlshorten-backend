@@ -15,9 +15,9 @@ datasource db {
 
 
 model url {
-  id    String @id @map("_id")
-  orginalUrl   String
-  hash  String
+   id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  longUrl   String @unique
+  urlID  String @unique
   shortUrl String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
