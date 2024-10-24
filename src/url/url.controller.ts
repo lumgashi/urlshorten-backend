@@ -23,7 +23,6 @@ export class UrlController {
   @SkipThrottle()
   @Get(':urlId')
   findOne(@Param('urlId') urlId: string, @Res() response: Response) {
-    console.log('dddd');
     return this.urlService.findOne(urlId, response);
   }
 }

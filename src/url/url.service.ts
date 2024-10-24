@@ -1,4 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { nanoid } from 'nanoid';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -6,6 +11,7 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
+import { url } from '@prisma/client';
 
 @Injectable()
 export class UrlService {
@@ -14,7 +20,7 @@ export class UrlService {
     @Inject(REQUEST) private readonly request: Request,
     private readonly configService: ConfigService,
   ) {}
-  async create(createUrlDto: CreateUrlDto) {
+  async create(createUrlDto: CreateUrlDto): Promise<url> {
     const { longUrl } = createUrlDto;
 
     const urlID = nanoid();
@@ -36,11 +42,13 @@ export class UrlService {
             urlID,
           },
         });
-        return { data: newUrl };
+        return newUrl;
       }
     } catch (error) {
-      console.log(error);
-      return error;
+      throw new InternalServerErrorException(
+        'Something went wrong, please try again',
+        { description: error },
+      );
     }
   }
 
@@ -48,7 +56,7 @@ export class UrlService {
     return `This action returns all url`;
   }
 
-  async findOne(urlId: string, response: Response) {
+  async findOne(urlId: string, response: Response): Promise<void> {
     try {
       const url = await this.prisma.url.findUnique({
         where: {
@@ -56,9 +64,16 @@ export class UrlService {
         },
       });
 
-      if (url) return response.redirect(url.longUrl);
+      if (!url) {
+        throw new NotFoundException('Could not find url');
+      }
+
+      // Perform the redirect
+      response.redirect(url.longUrl);
     } catch (error) {
-      console.log(error);
+      throw new InternalServerErrorException('Could not get url', {
+        description: error,
+      });
     }
   }
 }
