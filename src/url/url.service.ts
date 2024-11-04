@@ -52,10 +52,6 @@ export class UrlService {
     }
   }
 
-  findAll() {
-    return `This action returns all url`;
-  }
-
   async findOne(urlId: string, response: Response): Promise<void> {
     try {
       const url = await this.prisma.url.findUnique({
@@ -76,4 +72,9 @@ export class UrlService {
       });
     }
   }
+
+    findAll() {
+    return `This action returns all url`;
+  }
+
 }
