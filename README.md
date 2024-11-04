@@ -1,85 +1,131 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<h1>URL Shortening Service</h1>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<p>This repository contains a URL Shortening Service built with NestJS, Prisma, MongoDB, and Nanoid. The service provides a simple, efficient API for generating shortened URLs from long URLs and redirecting users to the original URL when accessing the shortened link. With a clean REST API design, this project demonstrates core backend development principles such as CRUD operations, dependency injection, and error handling with NestJS and Prisma.</p>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<h2>Table of Contents</h2>
+<ul>
+  <li><a href="#project-overview">Project Overview</a></li>
+  <li><a href="#features">Features</a></li>
+  <li><a href="#technologies-used">Technologies Used</a></li>
+  <li><a href="#getting-started">Getting Started</a></li>
+  <li><a href="#project-structure">Project Structure</a></li>
+  <li><a href="#api-endpoints">API Endpoints</a></li>
+  <li><a href="#usage">Usage</a></li>
+  <li><a href="#future-improvements">Future Improvements</a></li>
+</ul>
 
-## Description
+<h2 id="project-overview">Project Overview</h2>
+<p>URL shortening services make sharing lengthy URLs easier and more manageable. This project allows users to create shortened URLs for any given long URL and seamlessly redirects users to the original URL when they visit the shortened version. This service can be useful for social media sharing, analytics, and tracking purposes.</p>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<h2 id="features">Features</h2>
+<ul>
+  <li><strong>Create Short URL</strong>: Generate a unique shortened URL for any long URL.</li>
+  <li><strong>Redirect Short URL</strong>: Redirects users from the short URL to the original long URL.</li>
+  <li><strong>Error Handling</strong>: Properly managed error responses for cases such as missing URLs or invalid requests.</li>
+  <li><strong>Unique URL Generation</strong>: Ensures that each long URL gets a unique shortened link to prevent duplicates.</li>
+</ul>
 
-## Project setup
+<h2 id="technologies-used">Technologies Used</h2>
+<ul>
+  <li><strong>NestJS</strong>: A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.</li>
+  <li><strong>Prisma</strong>: An ORM that simplifies database operations, enabling clean data models and straightforward CRUD operations.</li>
+  <li><strong>MongoDB</strong>: A NoSQL database for flexible storage, ideal for handling dynamic data.</li>
+  <li><strong>NanoID</strong>: Used for generating short, unique identifiers.</li>
+  <li><strong>TypeScript</strong>: Strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.</li>
+</ul>
 
-```bash
-$ npm install
-```
+<h2 id="getting-started">Getting Started</h2>
+<h3>Prerequisites</h3>
+<p>Ensure you have the following tools installed on your machine:</p>
+<ul>
+  <li><strong>Node.js</strong></li>
+  <li><strong>NestJS CLI</strong></li>
+  <li><strong>MongoDB</strong> (locally or cloud-hosted instance)</li>
+  <li><strong>Docker</strong> (optional, if you prefer containerized setup)</li>
+</ul>
 
-## Compile and run the project
+<h3>Installation</h3>
+<ol>
+  <li>Clone the repository:</li>
+  <pre><code class="language-bash">
+  git clone https://github.com/lumgashi/urlshortener-backend.git
+  cd urlshortener-backend
+  </code></pre>
 
-```bash
-# development
-$ npm run start
+  <li>Install dependencies:</li>
+  <pre><code class="language-bash">
+  npm install
+  </code></pre>
 
-# watch mode
-$ npm run start:dev
+  <li>Configure environment variables by creating a <code>.env</code> file in the project root:</li>
+  <pre><code class="language-plaintext">
+  # .env file
+  DATABASE_URL="your-mongodb-connection-string"
+  devBaseURL="http://localhost:3000"
+  </code></pre>
 
-# production mode
-$ npm run start:prod
-```
+  <li>Run the database migration:</li>
+  <pre><code class="language-bash">
+  npx prisma generate
+  </code></pre>
 
-## Run tests
+  <li>Start the NestJS application:</li>
+  <pre><code class="language-bash">
+  npm run start:dev
+  </code></pre>
 
-```bash
-# unit tests
-$ npm run test
+  <li>The application will run at <code>http://localhost:5000</code>.</li>
+</ol>
 
-# e2e tests
-$ npm run test:e2e
+<h2 id="project-structure">Project Structure</h2>
+<ul>
+  <li><code>src/</code>: Contains all application code, organized by feature (e.g., <code>url</code> module).
+    <ul>
+      <li><code>url/</code>: Manages the URL shortening and redirection logic.</li>
+    </ul>
+  </li>
+  <li><code>dto/</code>: Data Transfer Objects to validate input data.</li>
+</ul>
 
-# test coverage
-$ npm run test:cov
-```
+<h2 id="api-endpoints">API Endpoints</h2>
 
-## Resources
+<h3>POST <code>/urls</code></h3>
+<ul>
+  <li><strong>Purpose</strong>: Creates a shortened URL from a long URL.</li>
+  <li><strong>Body</strong>: <code>{ "longUrl": "https://example.com/very-long-url" }</code></li>
+  <li><strong>Response</strong>:
+    <pre><code class="language-json">{
+      "id": "unique_id",
+      "longUrl": "https://example.com/very-long-url",
+      "shortUrl": "http://localhost:3000/{short_id}",
+      "urlID": "{short_id}"
+    }
+    </code></pre>
+  </li>
+</ul>
 
-Check out a few resources that may come in handy when working with NestJS:
+<h3>GET <code>/urls/:urlId</code></h3>
+<ul>
+  <li><strong>Purpose</strong>: Redirects to the long URL associated with the short urlId</li>
+  <li><strong>Path Parameter</strong>: <code>urlId</code> - The unique ID generated by NanoID for the short URL.</li>
+  <li><strong>Response</strong>: Redirects the user to the original long URL.</li>
+</ul>
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+<h2 id="usage">Usage</h2>
 
-## Support
+<ol>
+  <li><strong>Create a Short URL</strong>: Use a REST client like Postman or <code>curl</code> to create a shortened URL.</li>
+  <pre><code class="language-bash">
+  curl -X POST http://localhost:5000/urls -H "Content-Type: application/json" -d '{"longUrl": "https://example.com"}'
+  </code></pre>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+  <li><strong>Visit the Short URL</strong>: Access the <code>shortUrl</code> returned in the response to be redirected to the original <code>longUrl</code>.</li>
+</ol>
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+<h2 id="future-improvements">Future Improvements</h2>
+<ul>
+  <li><strong>Analytics</strong>: Track the number of clicks for each shortened URL.</li>
+  <li><strong>User Authentication</strong>: Allow only authenticated users to manage their shortened URLs.</li>
+  <li><strong>Expiration</strong>: Optionally set expiration dates for shortened URLs.</li>
+  <li><strong>Custom Aliases</strong>: Allow users to create custom short links instead of auto-generated IDs.</li>
+</ul>
